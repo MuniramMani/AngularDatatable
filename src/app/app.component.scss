@@ -27,10 +27,24 @@
   p {
     font-family: Lato;
   }
+
+
+//   table  start
+.table-head {
+    display: flex;
+    background: #e9e0e0;
+        color: #584e4e;
+    tr {
+        width: 20%;
+    }
+}
+
+//   table  end
   table {
     width: 90%;
     margin: auto;
     margin-top: 25px;
+    border: 1px solid rgba(0,0,0,.12);
     th {
         background: #e9e0e0;
         color: #584e4e;
@@ -187,3 +201,19 @@
       visibility: hidden;
     }
   }
+
+  .mat-button.mat-button-disabled {
+    background: #aeb7c1;
+    opacity: 0.9;
+    color: #ffffff;
+    margin-right: 5px;
+    cursor: not-allowed;
+}
+
+.mat-button {
+  line-height: 20px;
+}
+
+.button-lg {
+  line-height: 33px;
+}

@@ -4,56 +4,64 @@
       <span>Employee Table</span>
     </div>  
 </div>
-
 <div class="content" role="main"></div>
 
-<!-- container -table -->
+<div class="container">
+  <app-empolyee-table></app-empolyee-table>
+</div>
+<br>
+<!-- container - Material Table -->
 <article class="table-header">
-  <button class="button-remove-rows" mat-button (click)="removeSelectedRows()">
+  <button class="button-remove-rows button-lg" mat-button (click)="removeSelectedRows()" 
+    #focus [disabled]='toggleButton'>
     Remove Row
   </button>
-  <button class="button-add-row" mat-button (click)="addRow()">Add Row</button>
+  <button class="button-add-row button-lg" mat-button (click)="addRow()">Add Row</button>
 </article>
-
-<table mat-table [dataSource]="dataSource">
-  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-    <th mat-header-cell *matHeaderCellDef>
-      {{ col.label }}
-    </th>
-    <td mat-cell *matCellDef="let element">
-      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
-        <ng-container *ngSwitchCase="'isSelected'">
-          <mat-checkbox
-            (change)="element.isSelected = $event.checked"
-          ></mat-checkbox>
-        </ng-container>
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="element.isEdit = !element.isEdit">
-            Edit
-          </button>
-          <button
-            mat-button
-            class="button-remove"
-            (click)="removeRow(element.id)"
-          >
-            Delete
-          </button>
-        </div>        
-        <span *ngSwitchDefault>
-          {{ element[col.key] }}
-        </span>
-      </div>
-      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
-        <div *ngSwitchCase="'isSelected'"></div>
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="editRow(element)">Done</button>
-        </div>        
-        <mat-form-field class="form-input" *ngSwitchDefault>
-          <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
-        </mat-form-field>
-      </div>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ col.label }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+          <ng-container *ngSwitchCase="'isSelected'">
+            <mat-checkbox 
+              (change)="element.isSelected = $event.checked"
+              (click)="clickc(element.isSelected)"
+            ></mat-checkbox>
+          </ng-container>
+          <div class="btn-edit" *ngSwitchCase="'isEdit'">
+            <button mat-button (click)="element.isEdit = !element.isEdit">
+              Edit
+            </button>
+            <button
+              mat-button
+              class="button-remove"
+              (click)="removeRow(element.id)"
+            >
+              Delete
+            </button>
+          </div>        
+          <span *ngSwitchDefault>
+            {{ element[col.key] }}
+          </span>
+        </div>
+        <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+          <div *ngSwitchCase="'isSelected'"></div>
+          <div class="btn-edit" *ngSwitchCase="'isEdit'">
+            <button mat-button (click)="editRow(element)">Done</button>
+          </div>        
+          <mat-form-field class="form-input" *ngSwitchDefault>
+            <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
+          </mat-form-field>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+    <mat-paginator #paginator [pageSizeOptions]="[25, 50, 75, 100]" 
+      showFirstLastButtons></mat-paginator>
+</div>

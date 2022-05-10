@@ -13,11 +13,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { EmpolyeeTableComponent } from './table/empolyee-table/empolyee-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    EmpolyeeTableComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatCheckboxModule,
     MatDialogModule,
     HttpClientModule,
+    MatPaginatorModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

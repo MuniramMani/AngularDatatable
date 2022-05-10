@@ -1,0 +1,96 @@
+<article class="table-header">
+	<button  type="button" class="button-remove-rows button-lg" mat-button #myfocus 
+		(click)="deleteProducts()" #focus [disabled]='toggleButton'>Delete Selected Record(s)
+	</button>
+	<button class="button-add-row button-lg" mat-button (click)="addRowTable()">Add Row</button>
+	<!-- <button class="button-add-row button-lg" mat-button (click)="addRowTable(users.length)">Add Row</button> -->
+</article>
+
+<div *ngIf="products && products.length > 0; else elseBlock">
+	<div *ngIf="msg" [ngClass]="clss">{{msg}}</div>
+	<table class="table-nofrm datatable">
+		<thead>
+			<tr>
+				<th><input type="checkbox" [checked]="isAllCheckBoxChecked()" 
+					(change)="checkAllCheckBox($event)"
+					(click)="clickc(products)"></th>
+				<th>ID</th>
+				<th>Title</th>
+				<th>Completed</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of products; let i=index; let odd = odd" [ngClass]="odd ? 'odd_col' : 'even_col'">
+				<td><input type="checkbox" value="{{item.id}}" [(ngModel)]="products[i].checked"></td>
+				<ng-container *ngIf="enableEditIndex != i">
+					<td>{{ item.id }}</td>
+					<td>{{ item.title }}</td>
+					<td>{{ item.completed }}</td>
+						<td>
+							<div class="btn-edit">
+								<div *ngIf="enableEditIndex != i">
+									<button type="button" (click)="switchEditMode(i)">Edit</button>
+								</div>
+								<div>
+									<button type="button" class="button-remove" (click)="deleteRow(item)">Delete</button>
+								</div>
+							</div>
+						</td>
+        </ng-container>
+				<ng-container *ngIf="enableEditIndex == i">
+					<td> <input type="text" [(ngModel)]="item.id"> </td>
+					<td> <input type="text" [(ngModel)]="item.title"> </td>
+					<td> <input type="text" [(ngModel)]="item.completed"> </td>
+					<td>
+						<div class="btn-edit">         
+								<button type="button" (click)="save(item)">Done</button>
+						</div>
+					</td>
+				</ng-container>
+			</tr>
+		</tbody>
+	</table>
+
+
+<div class="controls">
+    <!-- pager -->
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(1)">First</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <a (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.totalPages)">Last</a>
+      </li>
+  </ul>  
+  </div>
+</div>
+<ng-template #elseBlock>
+	<div class="no-info">
+		<table class="table-nofrm datatable">
+			<thead>
+				<tr>
+					<th><input type="checkbox"></th>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Completed</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="5"><b>No record found</b></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</ng-template>
